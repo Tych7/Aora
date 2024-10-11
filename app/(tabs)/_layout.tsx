@@ -12,7 +12,7 @@ const TabIcon = ({icon, color, name, focused}) => {
                 tintColor={color}
                 style={{width: 24, height: 24}}
             />
-            <Text style={[{color: color}, focused ? styles.text_bold : styles.text_reqular]}>
+            <Text style={[{color: color}, focused ? styles.text_semibold : styles.text_reqular]}>
                 {name}
             </Text>
 
@@ -108,10 +108,10 @@ const styles = StyleSheet.create({
       fontSize: 14,
       fontFamily: 'Poppins-Regular',
     },
-    text_bold: {
+    text_semibold: {
         fontSize: 14,
         fontFamily: 'Poppins-SemiBold',
-      },
+    },
     tab: {
         flex: 1,
         alignItems: 'center',
