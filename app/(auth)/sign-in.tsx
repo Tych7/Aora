@@ -2,21 +2,29 @@ import { View, Text, StyleSheet, ScrollView, Dimensions, Image} from 'react-nati
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '@/constants'
-import FormField from '@/components/FormField'
 import { useState } from 'react'
+import { Link } from 'expo-router'
+
+import FormField from '@/components/FormField'
+import CustomButton from '@/components/CustomButton'
 
 const SignIn = () => {
   const [form, setform] = useState({
     email: '',
     password: ''
   })
+  const [IsSubmitting, setIsSubmitting] = useState(false)
+
+  const submit = () => {
+
+  }
 
   return (
     <SafeAreaView style={styles.basis}>
       <ScrollView>
         <View style={styles.canvas}>
           <Image style={styles.logo} source={images.logo}/>
-          <Text style={styles.text}>Log in to Aora</Text>
+          <Text style={styles.text_top}>Log in to Aora</Text>
           <FormField
             title="Email"
             value={form.email}
@@ -30,6 +38,18 @@ const SignIn = () => {
             handleChangeText={(e) => setform({...form,password: e})}
             otherStyles={{marginTop: 28}}
           />
+          <CustomButton
+            title="Sign In"
+            handlePress={submit}
+            containerStyles={{width: '95%', marginTop: 28}}
+            isLoading={IsSubmitting}
+          />
+          <View style={{justifyContent:'center', padding: 5, flexDirection: 'row'}}>
+            <Text style={styles.text_regular}>
+              Don't have account?
+            </Text>
+            <Link href="/sign-up" style={styles.text_semibold}>Sign Up</Link>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -49,22 +69,32 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 4,
     marginTop: 6,
-    marginLeft: 15,
+    alignItems: 'center',
   },
   logo:{
     resizeMode:'contain',
     width: 115,
     height: 35,
   },
-  text:{
+  text_regular:{
+    fontFamily: 'Poppins-Regular',
+    fontSize: 18,
+    lineHeight: 28,
+    color: '#d0ccdc',
+
+  },
+  text_top:{
     fontFamily: 'Poppins-SemiBold',
     marginTop: 40,
     fontSize: 24,
     lineHeight: 32,
-    color: 'white'
+    color: 'white',
+  },
+  text_bottom:{
+    fontFamily: 'Poppins-SemiBold',
+    marginTop: 40,
+    fontSize: 24,
+    lineHeight: 32,
+    color: 'white',
   }
-
-
-
-  
 })

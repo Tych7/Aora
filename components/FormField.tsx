@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useState } from 'react';
+import { icons } from '../constants';
 
 const FormField = ({title, value, placeholder, handleChangeText, otherStyles, ...props}) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,8 +25,12 @@ const FormField = ({title, value, placeholder, handleChangeText, otherStyles, ..
       onBlur={() => setIsFocused(false)}
       />
 
-      
-
+      {title === 'Password' && (
+        <TouchableOpacity onPress={() => 
+        setshowPassword(!showPassword)}>
+          <Image source={!showPassword ? icons.eye : icons.eyeHide} style={{width: 24, height: 24}}/>
+        </TouchableOpacity>
+      )}
       </View>
     </View>
   )
@@ -47,6 +52,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#201c2c',
     borderRadius: 16,
     marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   text_input:{
     flex: 1,
