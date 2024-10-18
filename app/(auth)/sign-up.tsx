@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image} from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, Alert} from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '@/constants'
@@ -7,6 +7,7 @@ import { Link } from 'expo-router'
 
 import FormField from '@/components/FormField'
 import CustomButton from '@/components/CustomButton'
+import { createUser } from '@/lib/appwrite'
 
 const SignUp = () => {
   const [form, setform] = useState({
@@ -16,8 +17,25 @@ const SignUp = () => {
   })
   const [IsSubmitting, setIsSubmitting] = useState(false)
 
-  const submit = () => {
+  const submit = async () => {
+    if(!form.username || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields')
+    }
+    setIsSubmitting(true);
 
+    try {
+      const result = await createUser(form.email, form.password, form.username)
+
+      // set it to global state...
+
+      router.replace('/home')
+    } catch (error) {
+      Alert.alert('Error', error.message)
+    } finally{
+      setIsSubmitting(false)
+    }
+
+    createUser();
   }
 
   return (
@@ -28,8 +46,8 @@ const SignUp = () => {
           <Text style={styles.text_top}>Sign up to Aora</Text>
           <FormField
             title="Username"
-            value={form.email}
-            handleChangeText={(e) => setform({...form,email: e})}
+            value={form.username}
+            handleChangeText={(e) => setform({...form,username: e})}
             otherStyles={{marginTop: 35}}
           />
           <FormField
